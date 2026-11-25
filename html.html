@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXRA 2026 | National Level Tech Symposium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #060913;
+      --bg-card: rgba(17, 25, 48, 0.72);
+      --border-glass: rgba(255, 255, 255, 0.1);
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.45);
+      --accent: #06b6d4;
+      --secondary: #ec4899;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.16) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 50% 85%, rgba(236, 72, 153, 0.12) 0%, transparent 45%);
+    }
+
+    h1, h2, h3, .brand {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(6, 9, 19, 0.8);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 20px var(--primary-glow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 26px rgba(6, 182, 212, 0.5);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 8rem 1.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #a5b4fc;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 650px;
+      color: var(--text-muted);
+      font-size: 1.12rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      width: 100%;
+      max-width: 540px;
+    }
+
+    .time-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(12px);
+      padding: 1.1rem 0.5rem;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .time-box span {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .time-box small {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.25s, border-color 0.25s;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--accent);
+    }
+
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .stat-card h3 {
+      font-size: 2.3rem;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      color: var(--text-muted);
+      padding: 0.55rem 1.2rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.25s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .event-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 20px;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .event-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+    }
+
+    .event-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--accent);
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+
+    .event-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .event-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .event-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-glass);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .timeline {
+      max-width: 750px;
+      margin: 0 auto;
+      border-left: 2px solid var(--primary);
+      padding-left: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .timeline-item {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      padding: 1.4rem;
+      border-radius: 16px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.55rem;
+      top: 1.6rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .timeline-time {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #0f172a;
+      border: 1px solid var(--border-glass);
+      border-radius: 22px;
+      width: 100%;
+      max-width: 460px;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.4rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-muted);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-glass);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      font-size: 0.95rem;
+    }
+
+    .form-group select option {
+      background: #0f172a;
+    }
+
+    .pass-card {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.2));
+      border: 1px dashed var(--accent);
+      padding: 1.5rem;
+      border-radius: 16px;
+      margin-top: 1rem;
+    }
+
+    .pass-id {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--success);
+      margin: 0.5rem 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--border-glass);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #060913;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-glass);
+      }
+      .nav-links.show {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="brand">IGNITE '26</div>
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><button class="btn-primary" onclick="openModal()">Register Now</button></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="badge">🚀 Department of Information Technology Presents</div>
+    <h1>Innovate. Code. <span class="gradient-text">Nexra the Future.</span></h1>
+    <p>Join 500+ developers, designers, and tech enthusiasts for a high-energy National Level Technical Symposium packed with coding battles, UI/UX sprints, and innovation showcases.</p>
+
+    <div class="countdown-grid">
+      <div class="time-box"><span id="days">00</span><small>Days</small></div>
+      <div class="time-box"><span id="hours">00</span><small>Hours</small></div>
+      <div class="time-box"><span id="minutes">00</span><small>Minutes</small></div>
+      <div class="time-box"><span id="seconds">00</span><small>Seconds</small></div>
+    </div>
+
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openModal()">Claim Your Pass</button>
+      <a href="#events" class="btn-outline">Explore Tracks</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-header">
+      <h2>Why Attend IGNITE 2026?</h2>
+      <p>A premier platform to showcase your technical prowess, collaborate with innovators, and win exciting cash prizes.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>₹50K+</h3>
+        <p>Total Prize Pool</p>
+      </div>
+      <div class="stat-card">
+        <h3>06+</h3>
+        <p>Curated Tech & Design Events</p>
+      </div>
+      <div class="stat-card">
+        <h3>500+</h3>
+        <p>Student Innovators</p>
+      </div>
+      <div class="stat-card">
+        <h3>100%</h3>
+        <p>Participation Certificates</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="events">
+    <div class="section-header">
+      <h2>Symposium Tracks</h2>
+      <p>Filter by category and register for your favorite competitions.</p>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterEvents('all', this)">All Events</button>
+      <button class="filter-btn" onclick="filterEvents('technical', this)">Technical</button>
+      <button class="filter-btn" onclick="filterEvents('design', this)">Design & UI/UX</button>
+      <button class="filter-btn" onclick="filterEvents('non-tech', this)">Non-Technical</button>
+    </div>
+
+    <div class="events-grid">
+      <div class="event-card" data-category="technical">
+        <div>
+          <span class="event-tag">Technical</span>
+          <h3>CodeSprint X</h3>
+          <p>Solve algorithmic puzzles and debug real-world code snippets against the clock.</p>
+        </div>
+        <div>
+          <div class="event-meta">
+            <span>👥 Team of 1–2</span>
+            <span>🏆 ₹10,000</span>
+          </div>
+          <button class="btn-primary" style="width:100%" onclick="openModal('CodeSprint X')">Register for Track</button>
+        </div>
+      </div>
+
+      <div class="event-card" data-category="design">
+        <div>
+          <span class="event-tag">Design & UI/UX</span>
+          <h3>PixelCraft UI Challenge</h3>
+          <p>Design an intuitive mobile or web interface in Figma based on a surprise problem statement.</p>
+        </div>
+        <div>
+          <div class="event-meta">
+            <span>👤 Individual</span>
+            <span>🏆 ₹8,000</span>
+          </div>
+          <button class="btn-primary" style="width:100%" onclick="openModal('PixelCraft UI Challenge')">Register for Track</button>
+        </div>
+      </div>
+
+      <div class="event-card" data-category="technical">
+        <div>
+          <span class="event-tag">Technical</span>
+          <h3>IoT & Smart Systems Expo</h3>
+          <p>Demonstrate hardware prototypes and smart automation solutions to industry judges.</p>
+        </div>
+        <div>
+          <div class="event-meta">
+            <span>👥 Team of 2–4</span>
+            <span>🏆 ₹12,000</span>
+          </div>
+          <button class="btn-primary" style="width:100%" onclick="openModal('IoT & Smart Systems Expo')">Register for Track</button>
+        </div>
+      </div>
+
+      <div class="event-card" data-category="technical">
+        <div>
+          <span class="event-tag">Technical</span>
+          <h3>PaperXplore</h3>
+          <p>Present emerging research ideas in AI, Cloud Computing, Cybersecurity, and Full-Stack Tech.</p>
+        </div>
+        <div>
+          <div class="event-meta">
+            <span>👥 Team of 1–3</span>
+            <span>🏆 ₹7,000</span>
+          </div>
+          <button class="btn-primary" style="width:100%" onclick="openModal('PaperXplore')">Register for Track</button>
+        </div>
+      </div>
+
+      <div class="event-card" data-category="design">
+        <div>
+          <span class="event-tag">Design & UI/UX</span>
+          <h3>Frontend Blitz</h3>
+          <p>Clone and enhance a responsive landing page using pure HTML, CSS, and JS within 90 minutes.</p>
+        </div>
+        <div>
+          <div class="event-meta">
+            <span>👤 Individual</span>
+            <span>🏆 ₹8,000</span>
+          </div>
+          <button class="btn-primary" style="width:100%" onclick="openModal('Frontend Blitz')">Register for Track</button>
+        </div>
+      </div>
+
+      <div class="event-card" data-category="non-tech">
+        <div>
+          <span class="event-tag">Non-Technical</span>
+          <h3>Tech Trivia & Meme Wars</h3>
+          <p>Fast-paced pop-culture tech quiz, logo guessing, and creative tech humor showdown.</p>
+        </div>
+        <div>
+          <div class="event-meta">
+            <span>👥 Team of 2</span>
+            <span>🏆 ₹5,000</span>
+          </div>
+          <button class="btn-primary" style="width:100%" onclick="openModal('Tech Trivia & Meme Wars')">Register for Track</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="schedule">
+    <div class="section-header">
+      <h2>Event Schedule</h2>
+      <p>Plan your day and make sure you don't miss the keynote and finals.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-time">09:00 AM – 10:00 AM</div>
+        <h3>Inauguration & Keynote Session</h3>
+        <p style="color:var(--text-muted)">Main Auditorium • Welcome address & industry keynote on Modern Web & AI.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">10:30 AM – 01:00 PM</div>
+        <h3>Morning Tracks (CodeSprint X & PixelCraft UI)</h3>
+        <p style="color:var(--text-muted)">IT Lab Block • Prelims and live design sprints.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">01:00 PM – 02:00 PM</div>
+        <h3>Networking Lunch Break</h3>
+        <p style="color:var(--text-muted)">Campus Food Court • Refreshments provided for all registered participants.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">02:00 PM – 04:00 PM</div>
+        <h3>Finals, IoT Expo & Paper Presentations</h3>
+        <p style="color:var(--text-muted)">Seminar Hall & Labs • Final evaluations by jury panel.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">04:15 PM – 05:00 PM</div>
+        <h3>Valedictory & Prize Distribution</h3>
+        <p style="color:var(--text-muted)">Main Auditorium • Winner announcements and certificate distribution.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 NEXRA Tech Symposium • Designed & Built with HTML, CSS & JS</p>
+  </footer>
+
+  <div class="modal-overlay" id="regModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeModal()">×</button>
+      <h3 style="margin-bottom:0.4rem">Symposium Registration</h3>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.2rem">Fill in your details to generate your instant entry pass.</p>
+
+      <form id="regForm" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="userName" placeholder="e.g., M. Hemapriya" required />
+        </div>
+        <div class="form-group">
+          <label>College / Institution</label>
+          <input type="text" id="userCollege" placeholder="e.g., P.S.R. Engineering College" required />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="userEmail" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label>Select Event Track</label>
+          <select id="eventSelect">
+            <option value="CodeSprint X">CodeSprint X</option>
+            <option value="PixelCraft UI Challenge">PixelCraft UI Challenge</option>
+            <option value="IoT & Smart Systems Expo">IoT & Smart Systems Expo</option>
+            <option value="PaperXplore">PaperXplore</option>
+            <option value="Frontend Blitz">Frontend Blitz</option>
+            <option value="Tech Trivia & Meme Wars">Tech Trivia & Meme Wars</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%">Generate Entry Pass</button>
+      </form>
+
+      <div id="passOutput" style="display:none">
+        <div class="pass-card">
+          <span style="font-size:0.8rem; text-transform:uppercase; color:var(--accent)">Official Digital Entry Pass</span>
+          <div class="pass-id" id="passId">#IGN-2026-000</div>
+          <h4 id="passName">Participant Name</h4>
+          <p id="passDetails" style="color:var(--text-muted); font-size:0.85rem; margin-top:0.3rem"></p>
+        </div>
+        <button class="btn-outline" style="width:100%; margin-top:1rem" onclick="resetModal()">Register Another</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 14);
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const gap = targetDate - now;
+
+      const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+      const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((gap % (1000 * 60)) / 1000);
+
+      document.getElementById('days').innerText = String(d).padStart(2, '0');
+      document.getElementById('hours').innerText = String(h).padStart(2, '0');
+      document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+      document.getElementById('seconds').innerText = String(s).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    function filterEvents(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.event-card').forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function openModal(eventName = '') {
+      resetModal();
+      if (eventName) {
+        document.getElementById('eventSelect').value = eventName;
+      }
+      document.getElementById('regModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('regModal').classList.remove('open');
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('userName').value;
+      const college = document.getElementById('userCollege').value;
+      const track = document.getElementById('eventSelect').value;
+      const randomId = Math.floor(100 + Math.random() * 900);
+
+      document.getElementById('passId').innerText = `#IGN-2026-${randomId}`;
+      document.getElementById('passName').innerText = name;
+      document.getElementById('passDetails').innerText = `${track} • ${college}`;
+
+      document.getElementById('regForm').style.display = 'none';
+      document.getElementById('passOutput').style.display = 'block';
+    }
+
+    function resetModal() {
+      document.getElementById('regForm').reset();
+      document.getElementById('regForm').style.display = 'block';
+      document.getElementById('passOutput').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
